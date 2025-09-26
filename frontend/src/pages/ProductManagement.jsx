@@ -1,18 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { 
-  Plus, 
-  Edit, 
-  Trash2, 
-  Package, 
-  Search, 
-  Filter,
-  Download,
-  Upload,
-  AlertTriangle,
-  TrendingUp,
-  TrendingDown
-} from 'lucide-react';
+import { Plus, CreditCard as Edit, Trash2, Package, Search, ListFilter as Filter, Download, Upload, TriangleAlert as AlertTriangle, TrendingUp, TrendingDown } from 'lucide-react';
 import Layout from '../components/layout/Layout';
 import Dialog from '../components/ui/Dialog';
 import DataTable from '../components/ui/DataTable';

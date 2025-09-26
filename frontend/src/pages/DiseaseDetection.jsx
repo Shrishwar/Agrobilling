@@ -1,16 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { 
-  Camera, 
-  Upload, 
-  Leaf, 
-  AlertTriangle, 
-  CheckCircle, 
-  ArrowLeft,
-  Lightbulb,
-  ShoppingCart,
-  Download
-} from 'lucide-react';
+import { Camera, Upload, Leaf, TriangleAlert as AlertTriangle, CircleCheck as CheckCircle, ArrowLeft, Lightbulb, ShoppingCart, Download } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '../components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';

@@ -1,17 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { 
-  Search, 
-  Filter, 
-  ShoppingCart, 
-  Star, 
-  ArrowLeft,
-  Grid,
-  List,
-  SlidersHorizontal,
-  Heart
-} from 'lucide-react';
+import { Search, ListFilter as Filter, ShoppingCart, Star, ArrowLeft, Grid2x2 as Grid, List, SlidersHorizontal, Heart } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Card, CardContent } from '../components/ui/card';

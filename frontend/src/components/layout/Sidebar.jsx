@@ -2,23 +2,7 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { motion, AnimatePresence } from 'framer-motion';
-import {
-  Home,
-  Users,
-  Package,
-  FileText,
-  BarChart3,
-  CreditCard,
-  Bell,
-  Settings,
-  Menu,
-  X,
-  User,
-  LogOut,
-  ShoppingCart,
-  Camera,
-  Sun
-} from 'lucide-react';
+import { Hop as Home, Users, Package, FileText, ChartBar as BarChart3, CreditCard, Bell, Settings, Menu, X, User, LogOut, ShoppingCart, Camera, Sun } from 'lucide-react';
 
 const getMenuItems = (role) => {
   const baseItems = [
