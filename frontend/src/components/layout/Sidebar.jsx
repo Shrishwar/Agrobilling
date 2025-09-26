@@ -14,25 +14,54 @@ import {
   Menu,
   X,
   User,
-  LogOut
+  LogOut,
+  ShoppingCart,
+  Camera,
+  Sun
 } from 'lucide-react';
 
-const menuItems = [
-  { icon: Home, label: 'Dashboard', path: '/dashboard', roles: ['admin', 'staff', 'customer'] },
-  { icon: Users, label: 'Customers', path: '/customers', roles: ['admin', 'staff'] },
-  { icon: Package, label: 'Products', path: '/products', roles: ['admin', 'staff'] },
-  { icon: FileText, label: 'Invoices', path: '/invoices', roles: ['admin', 'staff', 'customer'] },
-  { icon: BarChart3, label: 'Reports', path: '/reports', roles: ['admin'] },
-  { icon: CreditCard, label: 'Expenses', path: '/expenses', roles: ['admin'] },
-  { icon: Bell, label: 'Notifications', path: '/notifications', roles: ['admin', 'staff', 'customer'] },
-  { icon: Settings, label: 'Settings', path: '/settings', roles: ['admin'] },
-];
+const getMenuItems = (role) => {
+  const baseItems = [
+    { icon: Home, label: 'Dashboard', path: role === 'admin' ? '/admin' : role === 'staff' ? '/staff' : '/customer', roles: ['admin', 'staff', 'customer'] },
+  ];
+
+  const adminItems = [
+    { icon: Package, label: 'Products', path: '/admin/products', roles: ['admin'] },
+    { icon: Users, label: 'Customers', path: '/admin/customers', roles: ['admin'] },
+    { icon: FileText, label: 'Invoices', path: '/admin/invoices', roles: ['admin'] },
+    { icon: ShoppingCart, label: 'POS Billing', path: '/pos', roles: ['admin'] },
+    { icon: BarChart3, label: 'Reports', path: '/admin/reports', roles: ['admin'] },
+    { icon: CreditCard, label: 'Expenses', path: '/admin/expenses', roles: ['admin'] },
+    { icon: Bell, label: 'Notifications', path: '/admin/notifications', roles: ['admin'] },
+    { icon: Settings, label: 'Settings', path: '/admin/settings', roles: ['admin'] },
+  ];
+
+  const staffItems = [
+    { icon: ShoppingCart, label: 'POS Billing', path: '/pos', roles: ['staff'] },
+    { icon: Package, label: 'Products', path: '/staff/products', roles: ['staff'] },
+    { icon: Users, label: 'Customers', path: '/staff/customers', roles: ['staff'] },
+    { icon: FileText, label: 'Invoices', path: '/staff/invoices', roles: ['staff'] },
+    { icon: Bell, label: 'Notifications', path: '/staff/notifications', roles: ['staff'] },
+  ];
+
+  const customerItems = [
+    { icon: FileText, label: 'My Orders', path: '/customer/orders', roles: ['customer'] },
+    { icon: Bell, label: 'Notifications', path: '/customer/notifications', roles: ['customer'] },
+    { icon: User, label: 'Profile', path: '/customer/profile', roles: ['customer'] },
+  ];
+
+  if (role === 'admin') return [...baseItems, ...adminItems];
+  if (role === 'staff') return [...baseItems, ...staffItems];
+  if (role === 'customer') return [...baseItems, ...customerItems];
+  return baseItems;
+};
 
 const Sidebar = ({ isOpen, onClose }) => {
   const { user, logout } = useAuth();
   const location = useLocation();
   const [collapsed, setCollapsed] = useState(false);
 
+  const menuItems = getMenuItems(user?.role);
   const filteredMenuItems = menuItems.filter(item => 
     item.roles.includes(user?.role)
   );
@@ -62,13 +91,13 @@ const Sidebar = ({ isOpen, onClose }) => {
                 exit={{ opacity: 0, x: -10 }}
                 className="font-semibold text-primary"
               >
-                Agro Billing
+                AgroShop
               </motion.span>
             )}
           </AnimatePresence>
         </Link>
         <button
-          onClick={() => setCollapsed(!collapsed)}
+          onClick={onClose || (() => setCollapsed(!collapsed))}
           className="lg:hidden p-1 rounded-md hover:bg-gray-100"
           aria-label="Toggle sidebar"
         >

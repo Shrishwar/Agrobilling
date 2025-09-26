@@ -1,38 +1,56 @@
-# Agro Billing System
+# AgroShop - Complete Agricultural Web & Mobile App
 
-A complete, production-ready billing and POS system for agro shops with modern web interface and mobile APK support.
+A complete, production-ready agricultural e-commerce platform with modern web interface, mobile PWA support, and comprehensive features for farmers, agro shops, and administrators.
 
 ## Features
 
-- **Authentication & Roles**: JWT-based auth with Admin, Staff, and Customer roles
-- **Admin Dashboard**: Product management, staff management, reports, settings
-- **Staff POS**: Quick billing with product search, GST calculation, invoice generation
-- **Customer Portal**: Invoice history, outstanding balance tracking
-- **Invoice Generation**: PDF invoices with Puppeteer, WhatsApp sharing
-- **Payments**: Razorpay integration for UPI/Cards
-- **Notifications**: Firebase FCM push notifications, Twilio SMS/WhatsApp
-- **Mobile Support**: Capacitor wrapper for Android APK
+### 🌾 Core Features
+- **Multi-role Authentication**: Admin, Staff, and Customer roles with JWT
+- **Product Catalog**: Seeds, Fertilizers, Pesticides, Medicines with detailed info
+- **Smart POS System**: Quick billing with barcode scanning and invoice generation
+- **Disease Detection**: AI-powered plant disease identification with treatment suggestions
+- **Weather Integration**: Real-time weather updates and agricultural advice
+- **Scheme Management**: Government schemes and discount notifications
+- **Multilingual Support**: English and Marathi language support
+
+### 🎨 Modern UI/UX
+- **Responsive Design**: Mobile-first approach with tablet and desktop optimization
+- **Professional Theme**: Agricultural green color scheme with modern aesthetics
+- **Smooth Animations**: Framer Motion powered transitions and micro-interactions
+- **PWA Ready**: Installable web app with offline capabilities
+- **Accessibility**: WCAG compliant with keyboard navigation and screen reader support
+
+### 📱 Mobile & Offline
+- **Progressive Web App**: Install as native app on mobile devices
+- **Offline-first**: Service worker caching for offline functionality
+- **Push Notifications**: Firebase FCM for real-time updates
+- **SMS/WhatsApp**: Twilio integration for customer communication
 
 ## Tech Stack
 
 ### Frontend
 - React 18 + Vite
-- TailwindCSS + ShadCN UI
-- React Router + Context API
+- TailwindCSS + shadcn/ui components
+- Framer Motion for animations
+- React Router + Context API for state management
 - Axios for API calls
 - React Hot Toast for notifications
+- React Hook Form + Zod for form validation
 
 ### Backend
 - Node.js + Express.js
 - MongoDB + Mongoose
 - JWT Authentication
-- Puppeteer for PDF generation
+- PDFKit for invoice generation
 - Razorpay for payments
 - Twilio for SMS/WhatsApp
 - Firebase FCM for push notifications
+- Multer for file uploads
 
 ### Mobile
-- Capacitor for web-to-mobile wrapping
+- PWA with Service Workers
+- Web App Manifest for installation
+- Offline caching strategies
 
 ## Quick Start
 
@@ -46,7 +64,7 @@ A complete, production-ready billing and POS system for agro shops with modern w
 1. **Clone the repository**
    ```bash
    git clone <repository-url>
-   cd agro-billing-system
+   cd agroshop-app
    ```
 
 2. **Backend Setup**
@@ -66,13 +84,10 @@ A complete, production-ready billing and POS system for agro shops with modern w
    npm run dev   # Start frontend on port 5173
    ```
 
-4. **Mobile APK (Optional)**
-   ```bash
-   cd frontend
-   npx cap add android
-   npx cap copy
-   npx cap open android  # Open in Android Studio
-   ```
+4. **Access the Application**
+   - Frontend: http://localhost:5173
+   - Backend API: http://localhost:5000/api
+   - API Health: http://localhost:5000/api/health
 
 ### Environment Variables
 
@@ -81,8 +96,10 @@ Copy `backend/.env.example` to `backend/.env` and configure:
 ```env
 NODE_ENV=development
 PORT=5000
-MONGO_URI=mongodb://localhost:27017/agro-billing
+MONGODB_URI=mongodb://localhost:27017/agroshop
 JWT_SECRET=your-super-secret-jwt-key-here
+FRONTEND_URL=http://localhost:5173
+APP_NAME=AgroShop
 RAZORPAY_KEY_ID=your-razorpay-key-id
 RAZORPAY_KEY_SECRET=your-razorpay-key-secret
 FCM_SERVER_KEY=your-fcm-server-key
@@ -98,48 +115,95 @@ EMAIL_PASS=your-app-password
 ### Default Accounts
 After running `npm run seed`, use these accounts:
 
-- **Admin**: admin@agrobilling.com / admin123
-- **Staff**: staff@agrobilling.com / staff123
-- **Customer**: customer@agrobilling.com / customer123
+- **Admin**: admin@agroshop.com / admin123
+- **Staff**: staff@agroshop.com / staff123
+- **Customer**: customer@agroshop.com / customer123
 
+### User Roles & Permissions
+
+#### 👨‍💼 Admin Features
+- Complete product management (CRUD operations)
+- Customer and staff management
+- POS billing system
+- Sales reports and analytics
+- Scheme and discount management
+- Inventory tracking and alerts
+- System settings and configuration
+
+#### 👨‍💻 Staff Features
+- POS billing and invoice generation
+- Product inventory viewing
+- Customer management
+- Order processing
+- Basic reporting
+
+#### 👨‍🌾 Customer Features (Public)
+- Browse products without login
+- View schemes and weather updates
+- Plant disease detection
+- Product search and filtering
+
+#### 👤 Customer Features (Logged In)
+- Shopping cart and checkout
+- Order history and tracking
+- Invoice downloads
+- Personalized notifications
+- Profile management
 ### API Endpoints
 
 Base URL: `http://localhost:5000/api`
 
 #### Authentication
 - `POST /auth/login` - User login
-- `POST /auth/signup` - User registration
+- `POST /auth/register` - User registration
+- `GET /auth/me` - Get current user
+- `POST /auth/change-password` - Change password
 
 #### Products (Admin/Staff)
 - `GET /products` - List products
 - `POST /products` - Create product
 - `PUT /products/:id` - Update product
 - `DELETE /products/:id` - Delete product
+- `GET /products/stats/low-stock` - Get low stock products
 
 #### Invoices (Staff)
 - `GET /invoices` - List invoices
 - `POST /invoices` - Create invoice
 - `GET /invoices/:id` - Get invoice details
-- `GET /invoices/:id/pdf` - Download PDF
+- `GET /invoices/:id/download` - Download PDF
+- `PUT /invoices/:id/status` - Update invoice status
 
 #### Customers (Admin/Staff)
 - `GET /customers` - List customers
 - `POST /customers` - Create customer
+- `PUT /customers/:id` - Update customer
+- `GET /customers/:id/invoices` - Get customer invoices
 
 #### Reports (Admin)
 - `GET /reports/sales` - Sales reports
-- `GET /reports/gst` - GST reports
+- `GET /reports/inventory` - Inventory reports
+- `GET /reports/profit-loss` - Profit & loss reports
 
-## Postman Collection
+## Application Structure
 
-Import `postman_collection.json` for API testing.
+### Frontend Pages
+- **Public Pages**: Home, Products, Disease Detection, Weather
+- **Auth Pages**: Login, Signup
+- **Admin Pages**: Dashboard, Product Management, Customer Management, Reports
+- **Staff Pages**: Dashboard, POS Billing
+- **Customer Pages**: Dashboard, Order History, Profile
 
+### Key Components
+- **Layout System**: Responsive sidebar and topbar navigation
+- **UI Components**: Modern shadcn/ui based component library
+- **Form Handling**: React Hook Form with Zod validation
+- **State Management**: React Context for auth and language
+- **Animations**: Framer Motion for smooth transitions
 ## Building for Production
 
 ### Backend
 ```bash
 cd backend
-npm run build  # If using build script
 npm start
 ```
 
@@ -147,43 +211,82 @@ npm start
 ```bash
 cd frontend
 npm run build
-# Serve dist/ folder with nginx or similar
+# Deploy dist/ folder to your hosting provider
 ```
 
-### Mobile APK
+### PWA Installation
 ```bash
-cd frontend
-npm run build
-npx cap copy android
-npx cap build android --prod
+# The app can be installed as PWA from the browser
+# Service worker handles offline caching automatically
 ```
 
 ## Project Structure
 
 ```
-agro-billing-system/
+agroshop-app/
 ├── backend/
 │   ├── controllers/
 │   ├── models/
 │   ├── routes/
 │   ├── utils/
 │   ├── middleware/
-│   ├── config/
 │   ├── server.js
 │   ├── package.json
 │   └── .env.example
 ├── frontend/
 │   ├── src/
 │   │   ├── components/
+│   │   │   ├── layout/
+│   │   │   └── ui/
 │   │   ├── pages/
 │   │   ├── context/
-│   │   └── lib/
+│   │   ├── lib/
+│   │   └── main.jsx
 │   ├── public/
+│   │   ├── manifest.json
+│   │   └── sw.js
 │   ├── package.json
 │   └── vite.config.js
-├── mobile-app/  # Future native app
+├── postman_collection.json
+├── TODO.md
 └── README.md
 ```
+
+## Features in Detail
+
+### 🌱 Disease Detection
+- Upload plant images for AI analysis
+- Get disease identification with confidence scores
+- Receive organic and chemical treatment recommendations
+- Product suggestions for treatment
+- Downloadable diagnosis reports
+
+### 🌤️ Weather Integration
+- Real-time weather data for agricultural regions
+- 7-day weather forecast
+- Agricultural advice based on weather conditions
+- Crop calendar and planting recommendations
+- Weather alerts and notifications
+
+### 🛒 E-commerce Features
+- Product catalog with categories and filters
+- Shopping cart and checkout process
+- Multiple payment methods (Cash, Card, UPI)
+- Order tracking and history
+- Invoice generation and download
+
+### 📊 Analytics & Reporting
+- Sales analytics with charts and graphs
+- Inventory management and stock alerts
+- Customer analytics and insights
+- Profit & loss reporting
+- Export capabilities (Excel, PDF)
+
+### 🔔 Notification System
+- Push notifications for important updates
+- SMS and WhatsApp integration
+- Email notifications for orders and updates
+- Real-time alerts for low stock and weather
 
 ## Contributing
 
@@ -193,10 +296,75 @@ agro-billing-system/
 4. Push to branch (`git push origin feature/amazing-feature`)
 5. Open Pull Request
 
+## Testing
+
+### API Testing
+Import `postman_collection.json` into Postman for comprehensive API testing.
+
+### Frontend Testing
+```bash
+cd frontend
+npm run test
+```
+
+### End-to-End Testing
+```bash
+# Start both backend and frontend
+npm run dev # in both directories
+# Test all user flows manually or with automation tools
+```
+
+## Deployment
+
+### Backend Deployment
+- Deploy to services like Heroku, Railway, or DigitalOcean
+- Set up MongoDB Atlas for production database
+- Configure environment variables for production
+
+### Frontend Deployment
+- Deploy to Vercel, Netlify, or similar static hosting
+- Configure build settings and environment variables
+- Set up custom domain and SSL
+
+### Mobile App
+- PWA can be installed directly from browser
+- For native apps, use Capacitor or React Native wrapper
+- Submit to app stores if needed
+
+## Security Features
+
+- JWT-based authentication with secure token handling
+- Password hashing with bcrypt
+- Input validation and sanitization
+- Rate limiting for API endpoints
+- CORS configuration for cross-origin requests
+- Helmet.js for security headers
+- File upload restrictions and validation
+
+## Performance Optimizations
+
+- Code splitting and lazy loading
+- Image optimization and lazy loading
+- API response caching
+- Database indexing for faster queries
+- Compression middleware
+- Service worker caching strategies
+
 ## License
 
 MIT License - see LICENSE file for details.
 
 ## Support
 
-For support, email support@agrobilling.com or create an issue in the repository.
+For support, email support@agroshop.com or create an issue in the repository.
+
+## Roadmap
+
+- [ ] Advanced AI disease detection with more plant types
+- [ ] Integration with IoT sensors for real-time farm monitoring
+- [ ] Marketplace for farmers to sell their produce
+- [ ] Advanced analytics with machine learning insights
+- [ ] Multi-tenant support for multiple agro shops
+- [ ] Integration with government databases for schemes
+- [ ] Blockchain integration for supply chain transparency
+- [ ] Voice commands and regional language support
